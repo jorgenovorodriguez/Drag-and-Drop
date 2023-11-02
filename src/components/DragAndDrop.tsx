@@ -14,7 +14,7 @@ export const DragAndDrop = () => {
 
     const handleUpdateList = (id: number, status: Status) => {
 
-        let card = listItems.find(item => item.id === id)
+        const card = listItems.find(item => item.id === id)
  
         if (card && card.status !== status) {
  

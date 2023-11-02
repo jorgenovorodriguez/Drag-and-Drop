@@ -5,15 +5,27 @@ interface Props {
     items: Data[]
     status: Status
     isDragging: boolean
-    handleDragging: (dragging: boolean) => void
     handleUpdateList: (id: number, status: Status) => void
+    handleDragging: (dragging: boolean) => void
 }
 
-export const ContainerCards = ({items = [], status, isDragging, handleDragging }: Props) => {
+
+export const ContainerCards = ({items = [], status, isDragging, handleDragging, handleUpdateList }: Props) => {
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        handleUpdateList(+e.dataTransfer.getData('text'), status)
+        handleDragging(false)
+    }
+
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault()
+
 
     return (
         <div 
-        className={`layout-cards ${isDragging ? 'layout-dragging' : ''}`} 
+            className={`layout-cards ${isDragging ? 'layout-dragging' : ''}`} 
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
         >
             <p>{status} hero</p>
             {
